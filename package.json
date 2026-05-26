@@ -1,0 +1,30 @@
+{
+  "name": "student-info-management-system",
+  "version": "1.0.0",
+  "description": "A comprehensive Student Information Management System built with Node.js, Express, and MySQL",
+  "main": "crud_final_exam.js",
+  "scripts": {
+    "start": "node crud_final_exam.js",
+    "dev": "nodemon crud_final_exam.js"
+  },
+  "keywords": [
+    "student",
+    "management",
+    "crud",
+    "nodejs",
+    "express",
+    "mysql"
+  ],
+  "author": "Bea Coraje Infanso",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql2": "^3.6.0",
+    "dotenv": "^16.0.3",
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Information Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Menu -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <h1>Student Management System</h1>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="#" onclick="showSection('home')" class="nav-link active">Home</a></li>
+                <li><a href="#" onclick="showSection('register')" class="nav-link">Register Student</a></li>
+                <li><a href="#" onclick="showSection('list')" class="nav-link">View Students</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Homepage Section -->
+        <section id="home" class="section active">
+            <div class="homepage">
+                <h2>Welcome to Student Information Management System</h2>
+                <p>Manage student records efficiently with our comprehensive system.</p>
+                <div class="features">
+                    <div class="feature-card">
+                        <h3>📝 Add Students</h3>
+                        <p>Register new students with their complete information</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>📋 View Records</h3>
+                        <p>Access all student records in an organized table format</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>✏️ Edit Information</h3>
+                        <p>Update student details whenever needed</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🗑️ Delete Records</h3>
+                        <p>Remove student records from the system</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Student Registration Form Section -->
+        <section id="register" class="section">
+            <div class="form-container">
+                <h2>Student Registration Form</h2>
+                <form id="studentForm" onsubmit="handleFormSubmit(event)">
+                    <div class="form-group">
+                        <label for="studentId">Student ID:</label>
+                        <input 
+                            type="text" 
+                            id="studentId" 
+                            name="studentId" 
+                            placeholder="Enter Student ID"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fullName">Full Name:</label>
+                        <input 
+                            type="text" 
+                            id="fullName" 
+                            name="fullName" 
+                            placeholder="Enter Full Name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="course">Course:</label>
+                        <input 
+                            type="text" 
+                            id="course" 
+                            name="course" 
+                            placeholder="Enter Course Name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="yearLevel">Year Level:</label>
+                        <select id="yearLevel" name="yearLevel" required>
+                            <option value="">Select Year Level</option>
+                            <option value="1st Year">1st Year</option>
+                            <option value="2nd Year">2nd Year</option>
+                            <option value="3rd Year">3rd Year</option>
+                            <option value="4th Year">4th Year</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address:</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            placeholder="Enter Email Address"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Register Student</button>
+                        <button type="reset" class="btn btn-secondary">Clear Form</button>
+                    </div>
+                </form>
+                <div id="formMessage" class="message"></div>
+            </div>
+        </section>
+
+        <!-- Student List Section -->
+        <section id="list" class="section">
+            <div class="list-container">
+                <h2>Student List</h2>
+                <div class="table-controls">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Search by name or student ID..." 
+                        class="search-box"
+                    >
+                    <button onclick="loadStudents()" class="btn btn-primary">Refresh</button>
+                </div>
+                
+                <div id="tableMessage" class="message"></div>
+                
+                <div class="table-wrapper">
+                    <table id="studentsTable" class="students-table">
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Full Name</th>
+                                <th>Course</th>
+                                <th>Year Level</th>
+                                <th>Email Address</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <tr class="loading-row">
+                                <td colspan="6">Loading students...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Edit Student Modal -->
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Edit Student Information</h2>
+                    <span class="close" onclick="closeEditModal()">&times;</span>
+                </div>
+                <form id="editForm" onsubmit="handleEditSubmit(event)">
+                    <input type="hidden" id="editId">
+
+                    <div class="form-group">
+                        <label for="editStudentId">Student ID:</label>
+                        <input 
+                            type="text" 
+                            id="editStudentId" 
+                            placeholder="Enter Student ID"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editFullName">Full Name:</label>
+                        <input 
+                            type="text" 
+                            id="editFullName" 
+                            placeholder="Enter Full Name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editCourse">Course:</label>
+                        <input 
+                            type="text" 
+                            id="editCourse" 
+                            placeholder="Enter Course Name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editYearLevel">Year Level:</label>
+                        <select id="editYearLevel" required>
+                            <option value="">Select Year Level</option>
+                            <option value="1st Year">1st Year</option>
+                            <option value="2nd Year">2nd Year</option>
+                            <option value="3rd Year">3rd Year</option>
+                            <option value="4th Year">4th Year</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editEmail">Email Address:</label>
+                        <input 
+                            type="email" 
+                            id="editEmail" 
+                            placeholder="Enter Email Address"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Update Student</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+                    </div>
+                </form>
+                <div id="editMessage" class="message"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
